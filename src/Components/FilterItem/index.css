@@ -1,0 +1,22 @@
+.label {
+  font-family: 'roboto';
+  font-size: 13px;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+.check-box {
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  outline: none;
+}
+.list-item {
+  margin-bottom: 5px;
+}
+.emp-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+}

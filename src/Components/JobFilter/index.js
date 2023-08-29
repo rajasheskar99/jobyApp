@@ -1,9 +1,53 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+
+import FilterItem from '../FilterItem'
 import './index.css'
 
+const employmentTypesList = [
+  {
+    label: 'Full Time',
+    employmentTypeId: 'FULLTIME',
+  },
+  {
+    label: 'Part Time',
+    employmentTypeId: 'PARTTIME',
+  },
+  {
+    label: 'Freelance',
+    employmentTypeId: 'FREELANCE',
+  },
+  {
+    label: 'Internship',
+    employmentTypeId: 'INTERNSHIP',
+  },
+]
+
+const salaryRangesList = [
+  {
+    salaryRangeId: '1000000',
+    label: '10 LPA and above',
+  },
+  {
+    salaryRangeId: '2000000',
+    label: '20 LPA and above',
+  },
+  {
+    salaryRangeId: '3000000',
+    label: '30 LPA and above',
+  },
+  {
+    salaryRangeId: '4000000',
+    label: '40 LPA and above',
+  },
+]
+
 class JobFilter extends Component {
-  state = {profile: {}}
+  state = {
+    profile: {},
+    activeSalId: salaryRangesList[0].salaryRangeId,
+    activeEmpId: employmentTypesList[0].employmentTypeId,
+  }
 
   componentDidMount() {
     this.getProfile()
@@ -29,9 +73,17 @@ class JobFilter extends Component {
     this.setState({profile: updatedProfile})
   }
 
-  render() {
-    const {profile} = this.state
+  empInputId = id => {
+    this.setState({activeEmpId: id})
+  }
 
+  salInputId = salId => {
+    this.setState({activeSalId: salId})
+  }
+
+  render() {
+    const {profile, activeEmpId, activeSalId} = this.state
+    console.log(employmentTypesList, salaryRangesList, activeEmpId, activeSalId)
     return (
       <div className="jobs-left-sec">
         <div className="profile-card">
@@ -44,6 +96,13 @@ class JobFilter extends Component {
           <p className="bio">{profile.shortBio}</p>
         </div>
         <hr className="line" />
+        <h2 className="filter-title">Type of Employment</h2>
+        <FilterItem
+          empInputId={this.empInputId}
+          employmentTypes={employmentTypesList}
+          salaryRanges={salaryRangesList}
+          salInputId={this.salInputId}
+        />
       </div>
     )
   }

@@ -31,3 +31,9 @@
   font-size: 13px;
   color: #2c364c;
 }
+.filter-title {
+  font-family: 'roboto';
+  font-size: 16px;
+  color: white;
+  margin-top: 22px;
+}
