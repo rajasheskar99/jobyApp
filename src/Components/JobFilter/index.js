@@ -51,6 +51,7 @@ class JobFilter extends Component {
 
   componentDidMount() {
     this.getProfile()
+    this.getIdFromFilter()
   }
 
   getProfile = async () => {
@@ -81,9 +82,15 @@ class JobFilter extends Component {
     this.setState({activeSalId: salId})
   }
 
+  getIdFromFilter = () => {
+    const {getId} = this.props
+    const {activeEmpId, activeSalId} = this.state
+    getId(activeEmpId, activeSalId)
+  }
+
   render() {
-    const {profile, activeEmpId, activeSalId} = this.state
-    console.log(employmentTypesList, salaryRangesList, activeEmpId, activeSalId)
+    const {profile} = this.state
+
     return (
       <div className="jobs-left-sec">
         <div className="profile-card">

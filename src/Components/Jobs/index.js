@@ -7,7 +7,7 @@ import JobFilter from '../JobFilter'
 import './index.css'
 
 class Jobs extends Component {
-  state = {jobsInfo: []}
+  state = {jobsInfo: [], searchInput: '', employeeId: '', salaryId: ''}
 
   componentDidMount() {
     this.getJobInfo()
@@ -15,7 +15,8 @@ class Jobs extends Component {
 
   getJobInfo = async () => {
     const token = Cookies.get('jwt_token')
-    const url = 'https://apis.ccbp.in/jobs'
+    const {searchInput, employeeId, salaryId} = this.state
+    const url = `https://apis.ccbp.in/jobs?employment_type=${employeeId}&minimum_package=${salaryId}&search=${searchInput}`
     const options = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,13 +41,22 @@ class Jobs extends Component {
     }
   }
 
+  getSearchInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
   renderJobSection = () => {
-    const {jobsInfo} = this.state
+    const {jobsInfo, searchInput} = this.state
     return (
       <div className="jobs-container">
         <div className="job-right-sec">
           <div>
-            <input type="search" className="input-search" />
+            <input
+              type="search"
+              className="input-search"
+              onChange={this.getSearchInput}
+              value={searchInput}
+            />
             <button
               type="button"
               data-testid="searchButton"
@@ -65,12 +75,19 @@ class Jobs extends Component {
     )
   }
 
+  getId = (empId, salId) => {
+    this.setState({employeeId: empId, salaryId: salId})
+  }
+
   render() {
+    const {searchInput, employeeId, salaryId} = this.state
+    console.log(searchInput, employeeId, salaryId)
+
     return (
       <div className="jobs-section">
         <Header />
         <div className="job-main">
-          <JobFilter />
+          <JobFilter getId={this.getId} />
           {this.renderJobSection()}
         </div>
       </div>
